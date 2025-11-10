@@ -1,0 +1,295 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rifa de Navidad | Festival Singers Saltillo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Paleta de colores cálida y elegante */
+        :root {
+            --color-primary: #e09f50; /* Naranja/Dorado Cálido */
+            --color-secondary: #fef8f0; /* Crema/Hueso para fondo principal */
+            --color-dark: #3a2b1f; /* Marrón Oscuro para textos */
+            --color-light-bg: #fffbf5; /* Fondo de contenedores (blanco cálido) */
+            --color-sold: #d1d5db; /* Gris para boletos vendidos/apartados */
+        }
+
+        body {
+            background-color: var(--color-secondary);
+            color: var(--color-dark);
+            min-height: 100vh;
+        }
+
+        .header-bg {
+            /* Mantenemos la imagen, pero la optimizamos con clases responsivas y overlay */
+            background-image: url('/img/ranchitodelrey.webp');
+            background-size: cover;
+            background-position: center;
+            height: 350px;
+            position: relative;
+        }
+
+        .header-overlay {
+            background-color: rgba(254, 248, 240, 0.75);
+            backdrop-filter: blur(2px);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        
+        .info-box-bar {
+            border-top: 8px solid var(--color-primary); 
+        }
+
+        .ticket {
+            transition: all 0.2s;
+            user-select: none;
+            aspect-ratio: 1/1; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            border-radius: 6px;
+        }
+
+        .ticket.available {
+            background-color: #fff;
+            border: 2px solid var(--color-primary);
+            color: var(--color-dark);
+        }
+
+        .ticket.selected {
+            background-color: var(--color-primary);
+            border: 2px solid var(--color-primary);
+            color: white;
+        }
+        
+        .ticket.occupied {
+            background-color: var(--color-sold);
+            border: 2px solid var(--color-sold);
+            color: #4b5563;
+            cursor: not-allowed;
+        }
+
+        /* AJUSTE CLAVE: Cuadrícula de 7 columnas en móvil, 10 en web */
+        .tickets-grid-mobile {
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+        }
+        /* Override para pantallas medianas (md:grid-cols-10) */
+        @media (min-width: 768px) {
+            .tickets-grid-mobile {
+                grid-template-columns: repeat(10, 1fr) !important;
+                gap: 0.75rem;
+            }
+        }
+
+        /* --- MEDIA QUERY PERSONALIZADA PARA MÓVIL (MAX-WIDTH 767PX) --- */
+        /* Sobrescribe los tamaños de fuente grandes definidos en el HTML */
+        @media (max-width: 767px) {
+            /* Título principal de la rifa (p class="text-5xl...") */
+            .header-bg p:first-child { 
+                font-size: 1.75rem !important; /* text-3xl */
+            }
+
+            /* Título principal H1 (h1 class="text-4xl md:text-5xl...") */
+            .header-bg h1 {
+                font-size: 2.25rem !important; /* text-4xl */
+                line-height: 1.1; /* Asegura un espaciado reducido */
+            }
+            
+            /* Párrafo inferior (p class="text-5xl...") */
+            .header-bg p:last-child {
+                font-size: 1.75rem !important; /* text-3xl */
+            }
+        }
+        /* ----------------------------------------------------------------- */
+
+    </style>
+</head>
+<body>
+    
+    <header class="header-bg relative mb-8">
+        <div class="header-overlay"></div>
+        <div class="relative z-10 p-6 md:p-12 text-center flex flex-col items-center justify-center h-full">
+            <p class="text-5xl font-bold text-gray-900 mb-2"> Rifa Navideña entre Amigos 2025 🎄</p>
+            
+            <h1 class="text-4xl md:text-5xl font-bold text-dark mb-4">
+                Festival Singers Saltillo
+            </h1>
+            <p class="text-5xl font-bold text-gray-700">
+                Para la realización del concierto Händel y Britten 🎶
+            </p>
+        </div>
+    </header>
+    
+
+    <div class="container mx-auto px-4 max-w-5xl -mt-20 md:-mt-16 relative z-20">
+    <div class="bg-white p-4 md:p-6 rounded-xl shadow-xl info-box-bar border border-gray-200">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-y-6 gap-x-2 text-center"> 
+            
+            <div class="p-2">
+                <span class="text-3xl font-semibold">🗓️</span>
+                <p class="text-xs md:text-sm text-gray-700 font-medium mt-1">Fecha del Evento</p>
+                <p class="text-sm font-bold">13 de Diciembre, 2025</p>
+                <p class="text-xs md:text-sm text-gray-700 font-medium mt-1">Fecha del Sorteo</p>
+                <p class="text-sm font-bold">01 de Diciembre, 2025</p>
+            </div>
+            
+            <div class="p-2">
+                <span class="text-3xl font-semibold">💵</span>
+                <p class="text-xs md:text-sm text-gray-700 font-medium mt-1">Costo de Boletos para Rifa</p>
+                <p class="text-sm font-bold">$200</p>
+            </div>
+
+            <div class="p-2">
+                <span class="text-3xl font-semibold">🟢</span> 
+                <p class="text-xs md:text-sm text-gray-700 font-medium mt-1">Acceso (Concierto)</p>
+                <p class="text-sm font-bold text-green-600">Entrada Libre</p>
+                <p class="text-xs text-gray-500">Donativo Voluntario</p>
+            </div>
+
+            <div class="p-2">
+                <span class="text-3xl font-semibold">👥</span>
+                <p class="text-xs md:text-sm text-gray-700 font-medium mt-1">Invitados</p>
+                <p class="text-sm font-bold">BETUEL RAMIREZ - ARPISTA</p>
+                <p class="text-xs text-gray-500">ENSAMBLE DE LA OFDC Y SOLISTAS DEL FSS</p>
+            </div>
+            
+            <div class="p-2">
+                <span class="text-3xl font-semibold">🎼</span>
+                <p class="text-xs md:text-sm text-gray-700 font-medium mt-1">Evento musical</p>
+                <p class="text-sm font-bold">Händel & Britten</p>
+            </div>
+
+            <div class="p-2">
+                <span class="text-3xl font-semibold">📍</span>
+                <p class="text-xs md:text-sm text-gray-700 font-medium mt-1">Ubicación</p>
+                <p class="text-sm font-bold">Ranchito del Rey y María Madre</p>
+                <p class="text-xs text-gray-500">(Carr. A Los Rodriguez s/n Los González C.P 25204, Saltillo, Coah)</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+   <div class="container mx-auto px-4 max-w-5xl mt-8">
+    <div class="text-center mb-6">
+        <h2 class="text-2xl md:text-3xl font-bold text-dark">Premios 🎁</h2>
+        <p class="text-gray-600 text-sm md:text-base mt-1">Participa y gana increíbles premios esta Navidad</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <div class="bg-white rounded-xl overflow-hidden shadow-xl border-t-8 border-primary p-4 md:p-6">
+            <h3 class="text-2xl font-extrabold text-primary mb-2 text-center">🏆 1er LUGAR</h3>
+            <p class="text-xs text-gray-600 text-center mb-4 font-semibold">¡Se lleva el paquete completo más vino!</p>
+            
+            <div class="grid grid-cols-2 gap-4">
+                
+                <div class="bg-light-bg rounded-lg p-2 text-center shadow-inner">
+                    <img src="/img/microondas.jpeg" alt="Horno de Microondas" class="w-full h-24 object-cover rounded-md mb-1" />
+                    <p class="font-bold text-sm leading-tight">Horno de Microondas</p>
+                    <span class="text-xs text-gray-500">(Whirpool)</span>
+                </div>
+                
+                <div class="bg-light-bg rounded-lg p-2 text-center shadow-inner">
+                    <img src="/img/lampara.jpeg" alt="Lámpara Moderna" class="w-full h-24 object-cover rounded-md mb-1" />
+                    <p class="font-bold text-sm leading-tight">Lámpara de Escritorio</p>
+                    <span class="text-xs text-gray-500">(Amareto)</span>
+                </div>
+            </div>
+            
+            <div class="mt-4 p-3 bg-red-100 rounded-lg text-center border border-red-300">
+                <span class="text-sm font-bold text-dark">BONUS EXCLUSIVO:</span>
+                <p class="font-semibold text-lg text-red-700">🍾 Botella de Vino Tinto</p>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl overflow-hidden shadow-xl border-t-8 border-primary p-4 md:p-6">
+            <h3 class="text-2xl font-extrabold text-primary mb-2 text-center">🥈 2do LUGAR</h3>
+            <p class="text-xs text-gray-600 text-center mb-4 font-semibold">¡Se lleva un gran paquete más vino!</p>
+
+            <div class="grid grid-cols-2 gap-4">
+                
+                <div class="bg-light-bg rounded-lg p-2 text-center shadow-inner">
+                    <img src="/img/bocina.jpeg" alt="Bocina" class="w-full h-24 object-cover rounded-md mb-1" />
+                    <p class="font-bold text-sm leading-tight">Bocina</p>
+                    <span class="text-xs text-gray-500">(Kaiser)</span>
+                </div>
+                
+                <div class="bg-light-bg rounded-lg p-2 text-center shadow-inner">
+                    <img src="/img/aspiradora.jpeg" alt="Aspiradora" class="w-full h-24 object-cover rounded-md mb-1" />
+                    <p class="font-bold text-sm leading-tight">Aspiradora</p>
+                    <span class="text-xs text-gray-500">(Koblenz)</span>
+                </div>
+            </div>
+
+            <div class="mt-4 p-3 bg-red-100 rounded-lg text-center border border-red-300">
+                <span class="text-sm font-bold text-dark">BONUS EXCLUSIVO:</span>
+                <p class="font-semibold text-lg text-red-700">🍾 Botella de Vino Tinto</p>
+            </div>
+        </div>
+    </div>
+</div>
+    
+    <div class="bg-primary/10 p-4 md:p-6 rounded-lg text-center mt-6 md:mt-8 border border-primary/30 mx-auto max-w-5xl px-4">
+        <h3 class="text-xl font-bold text-dark mb-3">¡Listo para participar!</h3>
+        <p class="text-sm md:text-base text-gray-700 mb-4 max-w-2xl mx-auto">
+            Para **apartar tus números favoritos** y confirmar tu participación, por favor, contacta a nuestros organizadores:
+        </p>
+        <div class="text-center mb-4 text-primary font-semibold text-sm sm:text-base">
+            <span class="whitespace-nowrap">844 598 4330</span> · 
+            <span class="whitespace-nowrap">844 492 2259</span> 
+           
+        </div>
+        
+        <p class="text-xs text-gray-600 mb-2">
+            O realiza una transferencia a la siguiente cuenta (Reporta tu pago con los números de contacto):
+        </p>
+        <div class="inline-block bg-white p-3 rounded-lg shadow-inner text-left text-xs sm:text-sm">
+            <p class="font-bold text-dark">Banco: <span class="font-normal">AFIRME</span></p>
+            <p class="font-bold text-dark">Nombre: <span class="font-normal">Lawrie Elwood McEwan X</span></p>
+            <p class="font-bold text-dark">Cuenta: <span class="font-normal">837423538</span></p>
+            <p class="font-bold text-dark">CLABE: <span class="font-normal">062078008374235382</span></p>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 max-w-5xl mt-6 md:mt-12 bg-light-bg p-4 md:p-6 rounded-xl shadow-lg border border-gray-200">
+    <div class="text-center mb-4">
+        <h2 class="text-2xl font-bold text-dark">Selecciona tus Números</h2>
+        <p class="text-gray-600 text-sm mt-1">
+            Elige entre los <span id="total-tickets">400</span> números disponibles. Precio por número: <span class="font-bold text-primary">$200</span>
+        </p>
+    </div>
+
+    <div class="flex flex-wrap justify-center items-center gap-3 sm:gap-4 mb-6 text-xs sm:text-sm">
+        <div class="flex items-center">
+            <div class="ticket w-4 h-4 sm:w-6 sm:h-6 available mr-2 border-2"></div>
+            <span>Disponible (<span id="available-count">400</span>)</span>
+        </div>
+        
+        <div class="flex items-center">
+            <div class="ticket w-4 h-4 sm:w-6 sm:h-6 occupied mr-2"></div>
+            <span>Vendido/Apartado (<span id="occupied-count">0</span>)</span>
+        </div>
+    </div>
+
+    <div class="grid tickets-grid-mobile mb-6" id="tickets-grid">
+    </div>
+</div>
+
+<div class="container mx-auto px-4 max-w-5xl mt-8 mb-8 text-center">
+    <img src="/img/flyer.jpg" alt="Flyer del Evento Musical Händel y Britten" 
+         class="w-full max-w-xl inline-block rounded-lg shadow-xl" >
+</div>
+<footer class="mt-8 mb-4 text-center text-xs text-gray-500">
+    <p>Rifa Navideña 2025 • Concierto de Händel y Britten</p>
+    <p>Todos los derechos reservados. Actualizado: <span id="last-update"></span></p>
+</footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

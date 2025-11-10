@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteo de Ganadores - Rifa Festival Singers</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f7f3f0;
+            margin: 0;
+            color: #3a2b1f;
+        }
+
+        /* Estilo general para la ruleta */
+        .ruleta-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 40px auto;
+            border-radius: 50%;
+            background: radial-gradient(circle, #fffbf5 30%, #e09f50 100%);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* El círculo que gira */
+        .ruleta-base {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            /* Propiedad para la animación de giro del círculo */
+            transition: transform 5s cubic-bezier(0.25, 0.1, 0.25, 1.0);
+        }
+
+        /* El número que cambia, siempre centrado y sin girar */
+        .numero-display {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3.5rem; /* Aumentamos el tamaño */
+            font-weight: bold;
+            color: #d13030;
+            z-index: 5;
+        }
+
+        /* Indicador (Flecha) */
+        .indicador {
+            position: absolute;
+            top: 50%; /* Centramos verticalmente */
+            right: 0; /* Colocamos a la derecha */
+            transform: translateY(-50%) translateX(100%); /* Lo sacamos del círculo y lo centramos */
+            width: 0;
+            height: 0;
+            border-top: 15px solid transparent; /* Cambiamos a top/bottom para apuntar hacia la izquierda */
+            border-bottom: 15px solid transparent; 
+            border-left: 25px solid #d13030; /* La flecha apunta hacia la izquierda (dentro) */
+            z-index: 10;
+        }
+
+        #resultado-display {
+            margin-top: 30px;
+            font-size: 2em;
+            font-weight: bold;
+            color: #e09f50;
+            min-height: 50px;
+            text-align: center;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px; /* Separación entre botones */
+        }
+        
+        #girar-btn {
+            background-color: #e09f50;
+            color: white;
+        }
+
+        #girar-btn:hover:not(:disabled) {
+            background-color: #c98845;
+        }
+
+        #continuar-btn {
+            background-color: #0d9488; /* Verde para continuar */
+            color: white;
+            display: none; /* Inicialmente oculto */
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            color: #666;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <h1>¡Sorteo de Ganador!</h1>
+    <p id="premio-actual">Premio Actual: Cargando...</p>
+
+    <div class="ruleta-container">
+        <div class="indicador"></div>
+        <div class="ruleta-base" id="ruleta-base"></div> <div class="numero-display" id="numero-display">Cargando</div> </div>
+
+    <button id="girar-btn">Cargando...</button>
+    <button id="continuar-btn">Continuar al Siguiente Premio</button>
+
+    <div id="resultado-display">Esperando ganador...</div>
+
+    <script src="ruleta.js"></script> 
+</body>
+</html>
