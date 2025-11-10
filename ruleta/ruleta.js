@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 1. Cargar datos del JSON
     // Se mantiene la ruta relativa que habías definido
-    fetch('/Rifa-Boletos/data.json') 
+    fetch('/Rifa-Boletos-Singers/data.json') 
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Error HTTP: ${response.status}. Verifique la ruta '../data.json'`);
